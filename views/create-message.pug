@@ -1,0 +1,9 @@
+extends layout
+block content
+    h1 create message
+    form(action='/messages/create', method='POST')
+        label(for='title') Title:
+        input#title(type='text', name='title')
+        label(for='message') Message:
+        input#message(type='text', name='message')
+        input(type='submit' value='Submit')

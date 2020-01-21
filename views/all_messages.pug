@@ -1,0 +1,10 @@
+extends layout
+block content
+    h1 all messages
+    a(href='/messages/create') create new message
+    div
+        for message in messages
+            h4 title: #{message.msg_title}
+            p Message: #{message.msg}
+            
+            
