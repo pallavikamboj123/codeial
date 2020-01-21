@@ -1,0 +1,19 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-image: url('https://images.pexels.com/photos/238118/pexels-photo-238118.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');
+  background-size: cover;
+  
+  
+}
+#main-div
+{
+  margin-top: 180px;
+}
+#alter-text
+{
+  margin-left: 80px;
+}
+a {
+  color: #00B7FF;
+}
