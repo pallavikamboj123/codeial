@@ -1,19 +1,45 @@
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  
   background-image: url('https://images.pexels.com/photos/238118/pexels-photo-238118.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');
   background-size: cover;
   
   
 }
-#main-div
-{
-  margin-top: 180px;
+div{
+  color: #3b4246;
+  font-family: 'ProximaNova-Semibold';
+  
 }
 #alter-text
 {
+  font-size: 20px;
+  font-family: 'ProximaNova-Semibold';
+}
+#main-div
+{
+  margin-top: 180px;
+  font-weight: bold;
+}
+#alter-text
+{
+  margin-left: 100px;
+  font-weight: 300;
+}
+#signUp
+{
+  margin-left: 170px;
+  color: #3b4246;
+  font-weight: bold;
+}
+#logIn
+{
   margin-left: 80px;
+  color: #3b4246;
+  font-weight: bold;
 }
-a {
-  color: #00B7FF;
-}
+a:hover { 
+  text-decoration: none; 
+} 
+
+
