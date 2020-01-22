@@ -3,11 +3,12 @@ extends layout
 block content
   div.container-fluid#main-div
       div.row.d-flex.align-items-center
-        div.col-md-8.offset-md-2.align-items-center
+        div.col-md-8.offset-md-1.align-items-center
           h1#main-text.text FEEL FREE TO SAY ANYTHING
           p#alter-text.text LET YOUR STRESS OUT HERE
-          a(href='/sign-up') Sign Up here
-          a(href='/login') already have an account? Go on Login here
+          a#signUp(href='/sign-up') Sign Up here
+          br
+          a#logIn(href='/login') already have an account? Go on Login here
           
 
 
