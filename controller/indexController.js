@@ -55,7 +55,7 @@ exports.signUp_post =
         {
             console.log(errors);
             //formErrors.push(errors.errors);
-            return res.render('/sign-up');
+            return res.render('signUp');
         }
         User.findOne({username: username})
         .then(user =>
@@ -63,7 +63,7 @@ exports.signUp_post =
                 if(user)
                 {
                     console.log('username already exsits');
-                    return res.render('/sign-up');
+                    res.render('signUp',{user:user});
                 }
                 else{
                     bcrypt.genSalt(10, (err,salt)=>
