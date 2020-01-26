@@ -5,17 +5,27 @@ block content
             .col-md-6.offset-md-1
                 form(action='/sign-up' method='POST')
                     h1 Sign-up
-                    if(user)
-                        span.text-muted *username already exist
+                    
                     div.input-group.pt-2.pl-5.pr-5
                         input.form-control#firstname(type='text' name='firstname' placeholder='first name here')
+                    
                     div.input-group.pt-2.pl-5.pr-5
                         input.form-control#lastname(type='text' name='lastname' placeholder='enter your last name')
                     div.input-group.pt-2.pl-5.pr-5
                         input.form-control#username(type='text' name='username' placeholder='User name here')
                     span.text-muted.pl-5 *username should be atleast 5 character long
+                    if(user)
+                        br
+                        span.text-muted.pl-5 *username #{user.username} already exist
                     div.input-group.pt-2.pl-5.pr-5
                         input.form-control#password(type='password' name='password' placeholder='your password here')
                     div.input-group.pt-2.pl-5.pr-5
                         input.form-control#confirm_password(type='password' name='confirm_password' placeholder='enter password again for confirmation')
+                        if(msg)
+                            span.text-muted.pl-5 #{msg};
                     button.btn.btn-info.mt-3.mb-3#submit-btn(type='submit') Sign-up
+                    if(errors)
+                        for error in errors
+                            //console.log(error[0]);
+                            span.text-muted.pl-5 #{error}
+                            br
