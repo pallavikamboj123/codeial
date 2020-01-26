@@ -24,7 +24,20 @@ const validateAndSanitize = [
     .trim()
     .isLength({min:1})
     .isAlphanumeric(),
-    validator.body('confirm_password','password must match').trim().custom((value,{req})=> value === req.body.password),
+    validator.body('confirm_password')
+    .trim()
+    .custom((value,{req})=> 
+    {
+        console.log("inside custom");
+        
+        if(value !== req.body.password)
+        {
+            res.render('signUp',{msg: "password must match"});
+        }
+    }),
+    
+    
+    //sanitize body
     validator.sanitizeBody(
 		['userName', 'firstName', 'lastName', 'password', 'passwordConfirm']
 	).escape()
@@ -53,8 +66,8 @@ exports.signUp_post =
         const errors = validator.validationResult(req);
         if(!errors.isEmpty())
         {
-            console.log(errors);
-            //formErrors.push(errors.errors);
+            console.log(errors.msg);
+            formErrors.push(errors.errors);
             return res.render('signUp');
         }
         User.findOne({username: username})
