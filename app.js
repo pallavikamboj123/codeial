@@ -32,25 +32,27 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 //session setup
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(
   session(
     {
       secret:'secret',
       resave: true,
-      saveUninitialized: true
+      saveUninitialized: false
     }
   )
 );
 //configure passport
 require('./config/passport')(passport);
-app.use(passport.initialize());
-app.use(passport.session());
+
 //connect flash
 app.use(flash());
 
