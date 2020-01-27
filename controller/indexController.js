@@ -3,6 +3,7 @@ const Message = require('../models/message');
 const validator = require('express-validator');
 var passport = require('passport');
 var bcrypt = require('bcrypt');
+const { check, validationResult } = require('express-validator');
 const { forwardAuthenticated } = require('../config/auth');
 
 
@@ -24,19 +25,14 @@ const validateAndSanitize = [
     .trim()
     .isLength({min:1})
     .isAlphanumeric(),
-    validator.body('confirm_password')
-    .trim()
-    .custom((value,{req})=> 
-    {
-        console.log("inside custom");
-        
-        if(value !== req.body.password)
-        {
-            res.render('signUp',{msg: "password must match"});
-        }
-    }),
+    validator.body('passwordConfirm', 'Passwords do not match, try again')
+		.not()
+		.isEmpty()
+		.exists()
+		.custom((value, { req }) => value === req.body.password),
     
     
+   
     //sanitize body
     validator.sanitizeBody(
 		['userName', 'firstName', 'lastName', 'password', 'passwordConfirm']
@@ -53,24 +49,39 @@ exports.signUp_get = (req,res)=>
     
     res.render('signUp');
 };
+
+
+
 //sign up post
-
-
 exports.signUp_post =
 [
     validateAndSanitize,
+    
+   
     (req,res,next)=>
     {
         const {firstname, lastname, username, password} = req.body;
+        console.log(req.body.password);
+        console.log(req.body.passwordConfirm);
         const formErrors = [];
         const errors = validator.validationResult(req);
         if(!errors.isEmpty())
         {
-            console.log(errors.msg);
-            formErrors.push(errors.errors);
-            return res.render('signUp');
+            console.log(`errors: ${JSON.stringify(errors)}`);
+            res.render('signUp',{errors: errors});
         }
-        User.findOne({username: username})
+        /*if (!errors.isEmpty()) 
+        {
+            res.render('signup', {
+              title: 'Sign Up',
+              
+              errors: errors.array()
+            })
+            return
+          }*/
+        else
+        {
+            User.findOne({username: username})
         .then(user =>
             {
                 if(user)
@@ -118,6 +129,7 @@ exports.signUp_post =
                 }
             })
     }
+}
 ]
 
 //login get
