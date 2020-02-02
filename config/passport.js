@@ -7,17 +7,20 @@ module.exports = passport => {
     passport.use(
       new LocalStrategy((username, password, done) => {
         // match user
-        User.findOne({ userName: username })
+        User.findOne({ username: username })
           .then(user => {
             // username not matched
             if (!user) {
+              console.log("username not found");
               return done(null, false, { message: 'No matching username found. Signup instead!' })
+              
             }
   
             // compare password
             bcrypt.compare(password, user.password, (err, isMatch) => {
                           if (err) throw err
-                          
+                          console.log(password);
+                          console.log(user.password);
               if (isMatch) {
                               // password matched, proceed to login
                 return done(null, user)
