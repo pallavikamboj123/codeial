@@ -6,5 +6,6 @@ block content
         for message in messages
             h4 title: #{message.msg_title}
             p Message: #{message.msg}
+            span.text-muted  This message is created by #{message.user} at #{message.timestamp}
             
             
