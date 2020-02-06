@@ -2,6 +2,7 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 const passport = require('passport');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -46,7 +47,8 @@ app.use(
     {
       secret:'secret',
       resave: true,
-      saveUninitialized: false
+      saveUninitialized: false,
+      store: new MongoStore({mongooseConnection: mongoose.connection})
     }
   )
 );
