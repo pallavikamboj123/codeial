@@ -1,15 +1,14 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
-const session = require('express-session');
-const MongoStore = require('connect-mongo')(session);
-const passport = require('passport');
+
+//const MongoStore = require('connect-mongo')(session);
+
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
-const flash = require('connect-flash');
+//const flash = require('connect-flash');
 
-const localStrategy = require('passport-local').Strategy;
 //var async = require('async');
 require('dotenv').config();
 const db_user = process.env.DB_USER;
@@ -19,15 +18,16 @@ var mongoDB = `mongodb+srv://${db_user}:${db_password}@cluster0-fwajg.mongodb.ne
 mongoose.connect(mongoDB,{useNewUrlParser: true});
 var db = mongoose.connection;
 db.on('error',console.error.bind(console,'mongoose connection error'));
+//used for session cookie
+const session = require('express-session');
+const passport = require('passport');
+const passportLocal = require('./config/passport-local-strategy');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var User = require('./models/user');
-var Message = require('./models/message');
+
 var app = express();
 app.engine('pug', require('pug').__express)
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+
 var bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
@@ -40,31 +40,35 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 //session setup
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(
-  session(
-    {
-      secret:'secret',
-      resave: true,
-      saveUninitialized: false,
-      store: new MongoStore({mongooseConnection: mongoose.connection})
-    }
-  )
-);
-//configure passport
-require('./config/passport')(passport);
 
 //connect flash
-app.use(flash());
-
-
-app.use('/', indexRouter);
+//app.use(flash());
 
 
 
+
+//these things should be in specific order
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
+
+app.use(session({
+  name:'codeial',
+  secret:"blahsomething",
+  saveUninitialized: false,
+  resave: false,
+  cookie:{
+    //age for how long a cookie will servive after that that will expire
+    maxAge: (1000*60*100)
+  }
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
   
+app.use('/', indexRouter);
 
 
 // catch 404 and forward to error handler
