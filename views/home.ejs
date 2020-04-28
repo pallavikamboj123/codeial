@@ -1,21 +1,13 @@
-<html>
-    <head></head>
-    <body>
-        <p><%= title%></p>
-        <h1>rendering something</h1>
-        <ul>
-            <% for(let i of contactlist) {%>
-                <li>
-                    <p><%=i.name%></p>
-                    <p><%=i.phone%></p>
-                    <a href="/delete-contact/?id=<%=i._id%>"><button>Delete this contact</button></a>
-                </li>
-                <%}%>
-        </ul>
-        <form action="/create-contact" method="POST">
-            <input type="text" placeholder="John" name="name">
-            <input type="text" placeholder="95673772" name="phone">
-            <button type="submit"> Submit</button>
-        </form>
-    </body>
-</html>
+
+<link rel="stylesheet" href="/css/home.css">
+      <h1>
+             Codeial / <%= title %>
+      </h1>
+
+      <section id="feed-posts">
+              <h4>Posts</h4>
+              <form action="" id = "new-post-form" method="POST">
+                     <textarea name="content"  cols="30" rows="3"></textarea>
+                     <input type="submit" value="Post">
+              </form>
+      </section>
