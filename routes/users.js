@@ -11,12 +11,11 @@ router.post('/create',usersController.create);
 //use passport as a middleware to authenticate
 router.post('/createSession', passport.authenticate(
         'local',
-        {failureRedirect: '/users/sing-in'}
+        {failureRedirect: '/users/sign-in'}
 ) ,usersController.createSession);
 
 
 router.get('/sign-out',usersController.destroySession);
-
 
 
 
